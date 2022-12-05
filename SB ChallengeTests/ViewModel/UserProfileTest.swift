@@ -1,14 +1,14 @@
 //
-//  SB_ChallengeTests.swift
+//  UserProfileTest.swift
 //  SB ChallengeTests
 //
-//  Created by George Kiplagat on 03/12/2022.
+//  Created by George Kiplagat on 05/12/2022.
 //
 
 import XCTest
 @testable import SB_Challenge
 
-final class SB_ChallengeTests: XCTestCase {
+final class UserProfileTest: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -18,9 +18,6 @@ final class SB_ChallengeTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testScoreIsComputedWhenGuessIsLowerThanTarget() {
-       }
-    
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -36,4 +33,22 @@ final class SB_ChallengeTests: XCTestCase {
         }
     }
 
+    func testJSONDecoding() {
+            
+            
+        let testBundle = Bundle(for: type(of: self))
+        let path = testBundle.path(forResource: "profile_sample", ofType: "json")
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path!), options: .alwaysMapped) else {
+            fatalError("Data is nil")
+        }
+            
+        let resource = try! JSONDecoder().decode(UserDetailsModel.self, from: data)
+            
+        XCTAssertEqual(resource.login, "george")
+        
+        
+    }
+    
+   
+    
 }
